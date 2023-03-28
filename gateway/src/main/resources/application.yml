@@ -1,0 +1,106 @@
+server:
+  port: 8088
+
+---
+
+spring:
+  profiles: default
+  cloud:
+    gateway:
+      routes:
+        - id: CustomerSection
+          uri: http://localhost:8081
+          predicates:
+            - Path=/customerOrderInfos/**, 
+        - id: OrderView
+          uri: http://localhost:8082
+          predicates:
+            - Path=, 
+        - id: OwnerSection
+          uri: http://localhost:8083
+          predicates:
+            - Path=/ownerOrderInfos/**, 
+        - id: OrderStatus
+          uri: http://localhost:8084
+          predicates:
+            - Path=, 
+        - id: DeliveryList
+          uri: http://localhost:8085
+          predicates:
+            - Path=, 
+        - id: DeliverySection
+          uri: http://localhost:8086
+          predicates:
+            - Path=/deliveryInfos/**, 
+        - id: CustomerNotySection
+          uri: http://localhost:8087
+          predicates:
+            - Path=, 
+        - id: frontend
+          uri: http://localhost:8080
+          predicates:
+            - Path=/**
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins:
+              - "*"
+            allowedMethods:
+              - "*"
+            allowedHeaders:
+              - "*"
+            allowCredentials: true
+
+
+---
+
+spring:
+  profiles: docker
+  cloud:
+    gateway:
+      routes:
+        - id: CustomerSection
+          uri: http://customerSection:8080
+          predicates:
+            - Path=/customerOrderInfos/**, 
+        - id: OrderView
+          uri: http://orderView:8080
+          predicates:
+            - Path=, 
+        - id: OwnerSection
+          uri: http://ownerSection:8080
+          predicates:
+            - Path=/ownerOrderInfos/**, 
+        - id: OrderStatus
+          uri: http://orderStatus:8080
+          predicates:
+            - Path=, 
+        - id: DeliveryList
+          uri: http://deliveryList:8080
+          predicates:
+            - Path=, 
+        - id: DeliverySection
+          uri: http://deliverySection:8080
+          predicates:
+            - Path=/deliveryInfos/**, 
+        - id: CustomerNotySection
+          uri: http://customerNotySection:8080
+          predicates:
+            - Path=, 
+        - id: frontend
+          uri: http://frontend:8080
+          predicates:
+            - Path=/**
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins:
+              - "*"
+            allowedMethods:
+              - "*"
+            allowedHeaders:
+              - "*"
+            allowCredentials: true
+
+server:
+  port: 8080
